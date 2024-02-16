@@ -5,7 +5,8 @@
 # 2024 (c) haegor
 #
 
-[ -f "./.env" ] && . ./.env || exit 0
+[ -f "$(dirname $0)/.env" ] && . "$(dirname $0)/.env" \
+  || { echo "Отсутствует файл настроек (.env). Останов."; exit 0; }
 
 work_dir="$(pwd)"
 today_dir="/home/$(whoami)/${TODAY}"

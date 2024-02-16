@@ -1,6 +1,7 @@
 #!/bin/bash
 
-[ -f "./.env" ] && . ./.env || exit 0
+[ -f "$(dirname $0)/.env" ] && . "$(dirname $0)/.env" \
+  || { echo "Отсутствует файл настроек (.env). Останов."; exit 0; }
 
 dt_year=$(date +%Y)
 dt_month=$(date +%m)

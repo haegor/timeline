@@ -5,7 +5,8 @@
 # (c) haegor
 #
 
-[ -f "./.env" ] && . ./.env || exit 0
+[ -f "$(dirname $0)/.env" ] && . "$(dirname $0)/.env" \
+  || { echo "Отсутствует файл настроек (.env). Останов."; exit 0; }
 
 human_month () {
   case $1 in

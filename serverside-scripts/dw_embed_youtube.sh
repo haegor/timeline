@@ -27,7 +27,8 @@
 # Ручник =)
 exit 0
 
-[ -f "./.env" ] && . ./.env || exit 0
+[ -f "$(dirname $0)/.env" ] && . "$(dirname $0)/.env" \
+  || { echo "Отсутствует файл настроек (.env). Останов."; exit 0; }
 
 skiplist=("${DW_PAGES_DIR}/wiki/stopwords.txt" "${DW_PAGES_DIR}/sidebar.txt")
 
