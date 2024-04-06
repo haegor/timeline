@@ -45,6 +45,7 @@ EOF
   return 0
 }
 
+# Вывод помощи.
 f_help_msg () {
   echo
   echo "Не указано сообщение для вывода."
@@ -82,20 +83,23 @@ f_find_displays () {
       renew_session=1
     }
 
-    # Для быстроты и отладки
-    ( [ $renew_seat != 1 ] && [ $renew_session != 1 ] ) \
-      && { [ "$DEBUG" == 'true' ] && echo "skip"; continue; } \
-      || { renew_seat=0; renew_session=0; }
+    # Для быстроты исполнения и удобства отладки
+    ( [ $renew_seat != 1 ] && [ $renew_session != 1 ] ) && {
+        [ "$DEBUG" == 'true' ] && echo "skip"
+        continue;
+    } || { renew_seat=0; renew_session=0; }
 
     [ "$DEBUG" == 'true' ] && {
       echo "+ new seat ${new_seat}"
       echo "+ new session ${new_session}"
     }
 
-    # TODO некрасиво. Но понятно. Надо что-то с этим сделать, но не ясно что.
-    if [ "$active_seat" == "$new_seat" ]		# Пока текущее место достаточно ново
+    # TODO некрасиво. Но понятно. Надо что-то с этим сделать, но пока не ясно что.
+    # TODO Обновление сессий сделано не очевидно. Слишком много сделано за счёт правильно организованных данных.
+    # Надо предусмотреть появление исключительных ситуаций.
+    if [ "$active_seat" == "$new_seat" ]		# Пока текущее место ещё в новинку
     then
-      if [ "$active_session" != "$new_session" ]	# Пока текущая сессия достаточно нова
+      if [ "$active_session" != "$new_session" ]	# Пока текущая сессия ещё в новинку
       then
         local active_session=$new_session
         # seats - глобальный массив. Для удобства.
